@@ -34,6 +34,13 @@ let AverageRating  = sequelize.define('average_rating', {
 }, {
 	freezeTableName: true
 });
+
+let TagRating  = sequelize.define('tag_rating', {
+  tag: Sequelize.STRING, 
+  rating: Sequelize.FLOAT
+}, {
+	freezeTableName: true
+});
 //////////
 ///
 
@@ -94,6 +101,24 @@ app
   	// 	res.send('ok')
   	// })
   })
+  .use('/import/tag', (req, res) => {
+  	// let data = fs.readFileSync(path.join(__dirname, '..', 'data', 'tags.csv')).toString();
+  	// let ratings = data.split('\n')
+  	// let tasks = []
+  	// ratings.forEach(rating => {
+  	// 	let info = rating.split(',')
+  	// 	let ratingInfo = {
+  	// 		tag: info[0],
+  	// 		rating: parseFloat(info[1])
+  	// 	}
+  	// 	tasks.push(TagRating.create(ratingInfo))
+  	// })
+
+  	// Promise.all(tasks)
+  	// .then(() => {
+  	// 	res.send('ok')
+  	// })
+  })
   .use('/report/rating', async (req, res) => {
   	let data = await sequelize.query(`
   		SELECT * 
@@ -108,6 +133,22 @@ app
   	}, [])
 
   	data = [['name', 'rating'], ...data]
+  	res.send(data)
+  })
+
+  .use('/report/tag', async (req, res) => {
+  	let data = await sequelize.query(`
+  		SELECT * 
+  		FROM tag_rating
+  		ORDER BY rating DESC
+  	`)
+  	data = data[0]
+  	data = data.reduce((items, item) => {
+  		items.push([item.tag, item.rating])
+  		return items
+  	}, [])
+
+  	data = [['tag', 'rating'], ...data]
   	res.send(data)
   })
 //  .use(response_helper)
