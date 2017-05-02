@@ -48,6 +48,14 @@ app
   app.use(logger('common'))
   .use(bodyParser.json({limit: '50mb'}))
   .use(bodyParser.urlencoded({ extended: false, limit: '50mb' }))
+  //cors
+  .use((req, res, next) => {
+	  res.header('Access-Control-Allow-Origin', '*');
+	  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE');
+	  res.header('Access-Control-Allow-Headers', 'Content-Type');
+
+	  next();
+	})
   //read data file
   .use('/import/movie', (req, res) => {
   	// let data = fs.readFileSync(path.join(__dirname, '..', 'data', 'movies.dat')).toString();
@@ -94,12 +102,11 @@ app
   		LIMIT 10
   	`)
   	data = data[0]
-  	console.log(data)
   	data = data.reduce((items, item) => {
   		items.push([item.name, item.rating])
   		return items
   	}, [])
-  	
+
   	data = [['name', 'rating'], ...data]
   	res.send(data)
   })
