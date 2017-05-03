@@ -19,11 +19,10 @@ class FilmRating extends Component {
     super(props)
     this.state = {
       options: {
-        title: 'Film rating',
-        hAxis: { title: 'Film'},
-        vAxis: { title: 'Rating'},
-        legend: 'none',
-        is3D:true
+        title: 'Film Rating',
+        hAxis: { title: 'Rating'},
+        vAxis: { title: 'Film'},
+        legend: 'none'
       },
       rows: [],
       columns: [
@@ -51,7 +50,7 @@ class FilmRating extends Component {
     return (
       <Paper style={style} zDepth={1} >
         <Chart
-          chartType="ColumnChart"
+          chartType="BarChart"
           data={this.state.rows}
           options={this.state.options}
           graph_id="ScatterChart2"
@@ -70,8 +69,8 @@ class TagRating extends Component {
     this.state = {
       options: {
         title: 'Tag rating',
-        hAxis: { title: 'Tag'},
-        vAxis: { title: 'Rating'},
+        hAxis: { title: 'Rating'},
+        vAxis: { title: 'Tag'},
         legend: 'none',
         chartArea: {
           height: '300px'
@@ -108,7 +107,7 @@ class TagRating extends Component {
           options={this.state.options}
           graph_id="ScatterChart3"
           width="100%"
-          height="3200px"
+          height="600px"
           chartArea={this.state.chartArea}
           legend_toggle
         />

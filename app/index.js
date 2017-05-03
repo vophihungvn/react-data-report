@@ -124,7 +124,8 @@ app
   		SELECT * 
   		FROM average_rating 
   		LEFT JOIN movie on average_rating.movie_id = movie.id 
-  		LIMIT 10
+  		ORDER BY rating DESC
+			LIMIT 20
   	`)
   	data = data[0]
   	data = data.reduce((items, item) => {
@@ -141,6 +142,7 @@ app
   		SELECT * 
   		FROM tag_rating
   		ORDER BY rating DESC
+			LIMIT 20
   	`)
   	data = data[0]
   	data = data.reduce((items, item) => {
